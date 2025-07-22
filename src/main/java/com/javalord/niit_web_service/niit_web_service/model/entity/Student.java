@@ -21,7 +21,8 @@ public class Student {
     private String password;
     @ManyToOne(fetch = FetchType.EAGER)
     private Department department;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "enroll_courses", inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> currentCourses = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY)
     private List<Grade> grades = new ArrayList<>();

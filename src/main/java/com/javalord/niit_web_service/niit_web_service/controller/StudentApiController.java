@@ -1,5 +1,6 @@
 package com.javalord.niit_web_service.niit_web_service.controller;
 
+import com.javalord.niit_web_service.niit_web_service.model.entity.Course;
 import com.javalord.niit_web_service.niit_web_service.model.entity.Student;
 import com.javalord.niit_web_service.niit_web_service.model.request.CreateStudent;
 import com.javalord.niit_web_service.niit_web_service.service.StudentService;
@@ -46,10 +47,22 @@ public class StudentApiController {
         return ResponseEntity.ok(students);
     }
 
-    @PostMapping(value = "/{studentId}/courses")
-    public String enrollForACourse() {
+    @PostMapping(value = "/{studentId}/courses/{courseId}")
+    public ResponseEntity<?> enrollForACourse(
+            @PathVariable(value = "studentId") String studentId,
+            @PathVariable(value = "courseId") int courseId
+    ) {
+        Student student = studentService.enrollForACourse(studentId, courseId);
 
-        return "Course enrolled!";
+        return ResponseEntity.ok(student);
     }
+
+    @GetMapping(value = "/{studentId}/courses")
+    public ResponseEntity<?> findAllEnrolledCourses(@PathVariable(value = "studentId") String studentId) {
+        List<Course> courses = studentService.findAllEnrolledCourses(studentId);
+
+        return ResponseEntity.ok(courses);
+    }
+
 }
 
