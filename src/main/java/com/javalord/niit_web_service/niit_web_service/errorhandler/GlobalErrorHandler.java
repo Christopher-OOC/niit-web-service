@@ -19,6 +19,15 @@ import java.util.*;
 @RestControllerAdvice
 public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleGeneralException(Exception ex) {
+        Error error = new Error();
+        error.setMesssage(ex.getMessage());
+        error.setDate(new Date());
+
+        return ResponseEntity.status(404).body(error);
+    }
+
     @ExceptionHandler(NoSuchResourceException.class)
     public ResponseEntity<?> handleNoSuchResourceException(NoSuchResourceException ex) {
         Error error = new Error();

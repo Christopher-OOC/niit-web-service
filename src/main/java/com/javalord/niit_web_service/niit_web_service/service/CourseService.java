@@ -28,11 +28,10 @@ public class CourseService {
     }
 
     public Course updateCourse(int id, CreateCourse request) {
-        Optional<Course> optional = courseRepository.findById(id);
-        if (optional.isEmpty()) {
+        Course course = courseRepository.findById(id);
+        if (course == null) {
             throw new NoSuchResourceException(ErrorMessages.NO_SUCH_COURSE);
         }
-        Course course = optional.get();
         course.setName(request.getName());
         course.setCode(request.getCode());
 
@@ -44,10 +43,10 @@ public class CourseService {
     }
 
     public Course findCourseById(int id) {
-        Optional<Course> optional = courseRepository.findById(id);
-        if (optional.isEmpty()) {
+        Course course = courseRepository.findById(id);
+        if (course == null) {
             throw new NoSuchResourceException(ErrorMessages.NO_SUCH_COURSE);
         }
-        return optional.get();
+        return course;
     }
 }
