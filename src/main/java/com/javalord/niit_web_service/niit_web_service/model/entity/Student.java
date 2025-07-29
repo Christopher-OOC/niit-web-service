@@ -19,6 +19,7 @@ public class Student {
     private String lastName;
     private String email;
     private String password;
+    private boolean isEnabled;
     @ManyToOne(fetch = FetchType.EAGER)
     private Department department;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -75,6 +76,14 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 
     public Department getDepartment() {

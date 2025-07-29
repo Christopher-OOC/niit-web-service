@@ -7,6 +7,7 @@ import com.javalord.niit_web_service.niit_web_service.model.exception.NoSuchReso
 import com.javalord.niit_web_service.niit_web_service.model.request.CreateStudent;
 import com.javalord.niit_web_service.niit_web_service.repository.CourseRepository;
 import com.javalord.niit_web_service.niit_web_service.repository.StudentRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -17,10 +18,15 @@ public class StudentService {
 
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
+    public StudentService(StudentRepository studentRepository,
+                          CourseRepository courseRepository,
+                          BCryptPasswordEncoder bCryptPasswordEncoder
+    ) {
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public Student createStudent(CreateStudent newStudent) {
@@ -29,7 +35,7 @@ public class StudentService {
         student.setFirstName(newStudent.getFirstName());
         student.setLastName(newStudent.getLastName());
         student.setEmail(newStudent.getEmail());
-        student.setPassword(newStudent.getPassword());
+        student.setPassword(bCryptPasswordEncoder.encode(newStudent.getPassword()));
 
         return studentRepository.save(student);
     }

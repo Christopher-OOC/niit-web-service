@@ -13,6 +13,8 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     Student findByStudentId(String studentId);
 
+    Student findByEmail(String email);
+
     List<Student> findByCurrentCoursesContaining(Course course);
 
 }

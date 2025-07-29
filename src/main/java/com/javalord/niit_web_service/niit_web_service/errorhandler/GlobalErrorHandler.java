@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +27,15 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
         error.setDate(new Date());
 
         return ResponseEntity.status(404).body(error);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<?> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        Error error = new Error();
+        error.setMesssage(ex.getMessage());
+        error.setDate(new Date());
+
+        return ResponseEntity.status(403).body(error);
     }
 
     @ExceptionHandler(NoSuchResourceException.class)
