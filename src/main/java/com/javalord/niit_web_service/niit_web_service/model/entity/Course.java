@@ -1,13 +1,17 @@
 package com.javalord.niit_web_service.niit_web_service.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "courses")
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private int id;
+    @Lob
+    @Column(name = "p_name", columnDefinition = "TEXT")
+    @NotNull(message = "Name is be provided!")
     private String name;
     private String code;
 

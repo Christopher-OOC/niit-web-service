@@ -5,6 +5,9 @@ import com.javalord.niit_web_service.niit_web_service.model.request.CreateCourse
 import com.javalord.niit_web_service.niit_web_service.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +22,9 @@ public class CourseApiController {
         this.courseService = courseService;
     }
 
+    @Secured("ROLE_ADMIN, ROLE_SUPER_ADMIN")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
+    @PostAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     @PostMapping
     public ResponseEntity<?> createCourse(@RequestBody  CreateCourse request) {
         Course course = courseService.createCourse(request);
