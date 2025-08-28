@@ -1,6 +1,9 @@
 package com.javalord.niit_web_service.niit_web_service.repository;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javalord.niit_web_service.niit_web_service.model.entity.Student;
+import com.javalord.niit_web_service.niit_web_service.model.request.CreateStudent;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -60,5 +63,19 @@ public class StudentRepositoryTests {
         Student student = studentRepository.findByStudentId("ERTYUIOIUYT");
 
         assertNull(student);
+    }
+
+    @Test
+    void ok() throws JsonProcessingException {
+        CreateStudent student = new CreateStudent();
+        student.setEmail("test@test.com");
+        student.setPassword("test");
+
+        System.out.println("Object String: " + student.toString());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String content = objectMapper.writeValueAsString(student);
+
+        System.out.println("JSON String: " + content);
     }
 }
